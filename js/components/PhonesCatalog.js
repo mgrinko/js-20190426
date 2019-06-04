@@ -12,6 +12,7 @@ export default class PhonesCatalog {
     this.element.innerHTML = `
       <ul class="phones">
         ${ this.props.phones.map(phone => `
+
           <li class="thumbnail">
             <a href="#${phone.id}" class="thumb">
               <img alt="${phone.name}" src="${phone.imageUrl}">
@@ -26,7 +27,8 @@ export default class PhonesCatalog {
             <a href="#${phone.id}">${phone.name}</a>
             <p>${phone.snippet}</p>
           </li>
-        `).join('') }
+          
+        `).join('') } 
       </ul>
     `;
   }
