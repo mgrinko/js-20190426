@@ -76,6 +76,11 @@ export default class PhonesPage {
 
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
+
+      onBack: () => {
+        this.state.selectedPhone = null;
+        this.render();
+      }
     });
   }
 }
