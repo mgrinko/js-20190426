@@ -3,10 +3,15 @@ export default class PhoneViewer {
     this.element = element;
     this.props = props;
 
+    this.state = {
+      currentPicture: this.props.phone.images[0],
+    };
+
     this.render();
 
     this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.closest('[data-element="back-button"]');
+      const delegateTarget =
+        event.target.closest('[data-element="back-button"]');
 
       if (!delegateTarget) {
         return;
@@ -21,7 +26,7 @@ export default class PhoneViewer {
 
     this.element.innerHTML = `
       <div>
-        <img class="phone" src="img/phones/motorola-xoom-with-wi-fi.0.jpg">
+        <img class="phone" src="${ this.state.currentPicture }">
     
         <button data-element="back-button">Back</button>
         <button>Add to basket</button>

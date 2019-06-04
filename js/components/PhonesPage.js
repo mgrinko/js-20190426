@@ -9,6 +9,7 @@ export default class PhonesPage {
     this.state = {
       phones: getAll(),
       selectedPhone: null,
+      basketItems: [],
     };
 
     this.render();
