@@ -1,3 +1,5 @@
+import ImageGallery from '../api/gallery.js';
+
 export default class PhoneViewer {
   
   
@@ -21,6 +23,13 @@ export default class PhoneViewer {
 
       this.props.onBack();
     });
+
+    new ImageGallery({
+      thumbs: this.element.querySelectorAll(".phone-thumbs li"),
+      bigImage: this.element.querySelector(".phone"),
+      onThumbnailClick: (thumbnail, i) => { this.state.currentPicture = this.props.phone.images[i] },
+    });
+
   }
 
   
@@ -48,7 +57,10 @@ export default class PhoneViewer {
       </div>
     `;
 
-    this.element
+    // размышления: ставить обработчики здесь нагляднее, так как видна
+    // DOM-структура компонента, можно найти необходимый элемент DOM
+    // здесь; но тогда теряется смысл функции render() - только генерация
+    // внутренностей компонента - нужно задать вопрос как лучше оформлять код
   }
 
 

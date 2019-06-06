@@ -32,6 +32,7 @@ export default class IamgeGallery {
                 thumbnail.querySelector("img");
             
             thumbnail.addEventListener("click", () => {
+                this._currentThumbIndex = i;
                 bigImg.setAttribute("src", newImg.getAttribute("src"));
                 this.onThumbnailClick(thumbnail, i);
             });
