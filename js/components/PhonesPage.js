@@ -1,5 +1,6 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
+import ShoppingCart from './ShoppingCart.js';
 import { getAll, getById } from '../api/phone.js';
 
 export default class PhonesPage {
@@ -22,7 +23,7 @@ export default class PhonesPage {
       return;
     }
 
-    new constructor(container, props);
+    return new constructor(container, props);
   }
 
   render() {
@@ -46,12 +47,7 @@ export default class PhonesPage {
           </section>
     
           <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
+            <ShoppingCart></ShoppingCart>
           </section>
         </div>
     
@@ -73,6 +69,12 @@ export default class PhonesPage {
         this.state.selectedPhone = getById(phoneId);
         this.render();
       },
+
+      onAddToBasket: (phone) => {
+        const shoppingCart = this.components.shoppingCart;
+        shoppingCart.addItem(phone);
+        shoppingCart.render();
+      }
     });
 
     this.initComponent(PhoneViewer, {
@@ -81,7 +83,24 @@ export default class PhonesPage {
       onBack: () => {
         this.state.selectedPhone = null;
         this.render();
+      },
+
+      onAddToBasket: (phone) => {
+        const shoppingCart = this.components.shoppingCart;
+        shoppingCart.addItem(phone);
+        shoppingCart.render();
       }
     });
+
+    const shoppingCart = this.initComponent(ShoppingCart, {
+      items: this.state.basketItems,
+      onRemoveItem: (item) => { console.log(`remove ${ item.name }`); },
+      onAddItem: (item) => { console.log(`add ${ item.name }`); },
+    });
+
+    this.components = {
+      shoppingCart, 
+    };
+
   }
 }

@@ -14,14 +14,22 @@ export default class PhoneViewer {
     this.render();
 
     this.element.addEventListener('click', (event) => {
-      const delegateTarget =
+      const backControl =
         event.target.closest('[data-element="back-button"]');
 
-      if (!delegateTarget) {
+      if (backControl) {
+        this.props.onBack();
         return;
       }
 
-      this.props.onBack();
+      const addToBasketControl =
+        event.target.closest('[data-element="add-to-basket-button"]');
+
+      if (addToBasketControl) {
+        this.props.onAddToBasket(this.props.phone);
+        return;
+      }
+
     });
 
     new ImageGallery({
@@ -41,7 +49,7 @@ export default class PhoneViewer {
         <img class="phone" src="${ this.state.currentPicture }">
 
         <button data-element="back-button">Back</button>
-        <button>Add to basket</button>
+        <button data-element="add-to-basket-button">Add to basket</button>
 
         <h1>${ phone.name }</h1>
 
