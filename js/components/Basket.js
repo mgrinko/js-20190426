@@ -43,9 +43,12 @@ export default class Basket {
     
           <section>
             <p>Shopping Cart</p>
-            <ul>
+            <ul class="basket-list">
             ${ this.props.basketItems.map( (item, i) => `
-              <li>${ item }><button data-delete-item="${ i++}">x</button></li>
+              <li class="basket-item">
+                <button class="basket-item__delete" data-delete-item="${ i++}">x</button>
+                ${ item }
+              </li>
             `).join('') } 
             </ul>
           </section>
