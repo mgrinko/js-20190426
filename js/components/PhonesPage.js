@@ -1,5 +1,6 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
+import Basket from './Basket.js';
 import { getAll, getById } from '../api/phone.js';
 
 export default class PhonesPage {
@@ -28,33 +29,7 @@ export default class PhonesPage {
   render() {
     this.element.innerHTML = `
       <div class="row">
-        <!--Sidebar-->
-        <div class="col-md-2">
-          <section>
-            <p>
-              Search:
-              <input>
-            </p>
-    
-            <p>
-              Sort by:
-              <select>
-                <option value="name">Alphabetical</option>
-                <option value="age">Newest</option>
-              </select>
-            </p>
-          </section>
-    
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
-          </section>
-        </div>
-    
+        <Basket></Basket> 
         <!--Main content-->
         <div class="col-md-10">
           ${ this.state.selectedPhone ? `
@@ -69,6 +44,11 @@ export default class PhonesPage {
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
 
+       onAddItem: (phoneName) => {
+        this.state.basketItems.push(phoneName);
+        this.render();
+      },
+
       onPhoneSelected: (phoneId) => {
         this.state.selectedPhone = getById(phoneId);
         this.render();
@@ -78,10 +58,24 @@ export default class PhonesPage {
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
 
+       onAddItem: (phoneName) => {
+        this.state.basketItems.push(phoneName);
+        this.render();
+      },
+
       onBack: () => {
         this.state.selectedPhone = null;
         this.render();
       }
+    });
+
+    this.initComponent(Basket, {
+      basketItems: this.state.basketItems,
+
+      // onAddItem: (phoneName) => {
+      //   this.state.basketItems.push(phoneName);
+      //   this.render();
+      // }
     });
   }
 }
