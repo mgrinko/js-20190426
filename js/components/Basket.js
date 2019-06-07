@@ -11,15 +11,13 @@ export default class Basket {
     this.render();
 
     this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.closest('[data-button-add=""]');
-
-      console.log(delegateTargete);
+      const delegateTarget = event.target.dataset.deleteItem;
 
       if (!delegateTarget) {
         return;
       }
 
-      this.props.onAddItem(this.element.dataset.phoneName);
+      this.props.onDeleteItem(+delegateTarget);
     });
   }
 
@@ -46,8 +44,8 @@ export default class Basket {
           <section>
             <p>Shopping Cart</p>
             <ul>
-            ${ this.props.basketItems.map( item => `
-              <li>${ item }><button>x</button></li>
+            ${ this.props.basketItems.map( (item, i) => `
+              <li>${ item }><button data-delete-item="${ i++}">x</button></li>
             `).join('') } 
             </ul>
           </section>

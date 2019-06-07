@@ -44,7 +44,7 @@ export default class PhonesPage {
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
 
-       onAddItem: (phoneName) => {
+      onAddItem: (phoneName) => {
         this.state.basketItems.push(phoneName);
         this.render();
       },
@@ -58,7 +58,7 @@ export default class PhonesPage {
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
 
-       onAddItem: (phoneName) => {
+      onAddItem: (phoneName) => {
         this.state.basketItems.push(phoneName);
         this.render();
       },
@@ -72,10 +72,10 @@ export default class PhonesPage {
     this.initComponent(Basket, {
       basketItems: this.state.basketItems,
 
-      // onAddItem: (phoneName) => {
-      //   this.state.basketItems.push(phoneName);
-      //   this.render();
-      // }
+      onDeleteItem: (item) => {
+        this.state.basketItems.splice(item, 1);
+        this.render();
+      }
     });
   }
 }
