@@ -3,11 +3,6 @@ export default class Basket {
     this.element = element;
     this.props = props;
 
-    this.state = {
-      
-      
-    };
-
     this.render();
 
     this.element.addEventListener('click', (event) => {
@@ -46,7 +41,7 @@ export default class Basket {
             <ul class="basket-list">
             ${ this.props.basketItems.map( (item, i) => `
               <li class="basket-item">
-                <button class="basket-item__delete" data-delete-item="${ i++}">x</button>
+                <button class="basket-item__delete" data-delete-item="${ i++ }">x</button>
                 ${ item }
               </li>
             `).join('') } 
