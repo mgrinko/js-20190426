@@ -1,5 +1,3 @@
-'use strict';
-
 export default class PhonesCatalog {
   constructor(element, props) {
     this.element = element;
@@ -15,6 +13,17 @@ export default class PhonesCatalog {
       }
 
       this.props.onPhoneSelected(delegateTarget.dataset.phoneId);
+    });
+
+    // на PhonesCatalog и PhoneViewer одинаковые обработчики событий, добавляющие в корзину. Как здесь избежать дубля?
+    this.element.addEventListener('click', (event) => {
+      const delegateTarget = event.target.closest('[data-element="add-button"]');
+
+      if (!delegateTarget) {
+        return;
+      }
+
+      this.props.addToBasket(delegateTarget.dataset.phoneId)
     });
   }
 
@@ -32,13 +41,17 @@ export default class PhonesCatalog {
             >
               <img alt="${phone.name}" src="${phone.imageUrl}">
             </a>
-  
+
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">
+              <a
+              class="btn btn-success"
+              data-element="add-button"
+              data-phone-id="${phone.id}"
+              >
                 Add
               </a>
             </div>
-  
+
             <a
               data-element="phone-link"
               data-phone-id="${phone.id}"
@@ -46,11 +59,11 @@ export default class PhonesCatalog {
             >
               ${phone.name}
             </a>
-            
+
             <p>${phone.snippet}</p>
           </li>
-          
-        `).join('') } 
+
+        `).join('') }
       </ul>
     `;
   }

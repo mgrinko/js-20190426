@@ -1,6 +1,7 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import { getAll, getById } from '../api/phone.js';
+import Basket from './Basket.js'
 
 export default class PhonesPage {
   constructor(element) {
@@ -35,7 +36,7 @@ export default class PhonesPage {
               Search:
               <input>
             </p>
-    
+
             <p>
               Sort by:
               <select>
@@ -44,17 +45,10 @@ export default class PhonesPage {
               </select>
             </p>
           </section>
-    
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
-          </section>
+
+          <Basket></Basket>
         </div>
-    
+
         <!--Main content-->
         <div class="col-md-10">
           ${ this.state.selectedPhone ? `
@@ -73,6 +67,12 @@ export default class PhonesPage {
         this.state.selectedPhone = getById(phoneId);
         this.render();
       },
+
+      addToBasket: (id) => {
+        let phone = getById(id);
+        this.state.basketItems.push(phone);
+        this.render();
+      },
     });
 
     this.initComponent(PhoneViewer, {
@@ -81,7 +81,17 @@ export default class PhonesPage {
       onBack: () => {
         this.state.selectedPhone = null;
         this.render();
-      }
+      },
+// как избежать дубля кода функции addToBasket?
+      addToBasket: (id) => {
+        let phone = getById(id);
+        this.state.basketItems.push(phone);
+        this.render();
+      },
+    });
+
+    this.initComponent(Basket, {
+      items: this.state.basketItems,
     });
   }
 }
