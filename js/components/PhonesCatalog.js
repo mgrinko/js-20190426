@@ -16,22 +16,14 @@ export default class PhonesCatalog {
 		});
 
 		this.element.addEventListener('click', (event) => {
-			const delegateTarget = event.target.closest('[data-element="phone-add"]');
+			const addToCart = event.target.closest('[data-element="phone-add"]');
 
-			if (!delegateTarget) {
+			if (!addToCart) {
 				return;
 			}
 
-			const phoneName = delegateTarget.dataset.phoneId;
-
-			const cartEmpty = document.querySelector('[data-cart="empty"]');
-			cartEmpty.hidden = true;
-			const cartItem = document.querySelector('shoppingcart');
-			cartItem.insertAdjacentHTML('beforeend', `
-				<li>${phoneName}<button>x</button></li>
-			`);
+			this.props.onItemAdded(addToCart.dataset.phoneId);
 		});
-
 
 	}
 
