@@ -1,6 +1,7 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import { getAll, getById } from '../api/phone.js';
+import Basket from './Basket.js';
 
 export default class PhonesPage {
   constructor(element) {
@@ -9,10 +10,21 @@ export default class PhonesPage {
     this.state = {
       phones: getAll(),
       selectedPhone: null,
-      basketItems: [],
+      basketItems: ['MOTOROLA XOOM\u2122', 'Dell Streak 7'],
     };
 
     this.render();
+
+    this.element.addEventListener('click', (event) => {
+      const delegateTarget = event.target.closest('[data-element="basket-button"]');
+
+      if (!delegateTarget) {
+        return;
+      }
+
+      this.state.basketItems.push(delegateTarget.dataset.phoneName);
+      this.render();
+    });
   }
 
   initComponent(constructor, props) {
@@ -44,15 +56,9 @@ export default class PhonesPage {
               </select>
             </p>
           </section>
-    
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
-          </section>
+
+          <Basket></Basket>
+
         </div>
     
         <!--Main content-->
@@ -82,6 +88,10 @@ export default class PhonesPage {
         this.state.selectedPhone = null;
         this.render();
       }
+    });
+
+    this.initComponent(Basket, {
+      basket: this.state.basketItems,
     });
   }
 }
