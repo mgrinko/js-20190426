@@ -105,3 +105,18 @@ ul.specs dt {
 h1 {
   border-bottom: 1px solid gray;
 }
+
+.basket-list {
+	padding: 0;
+}
+.basket-list li {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 5px 0;
+}
+.basket-list button {
+	margin-left: 5px;
+}
+

@@ -12,6 +12,7 @@ export default class PhonesPage {
 			phones: getAll(),
 			selectedPhone: null,
 			basketItems: [],
+			itemAdded: null,
 		};
 
 		this.render();
@@ -46,9 +47,23 @@ export default class PhonesPage {
 							</select>
 							</p>
 					</section>
+					
+					<section>
+						<p>Shopping Cart</p>
+						
+						${this.state.itemAdded ? `
+							<ul
+							data-element="basket-list"
+							class="basket-list"
+							>
+								<ShoppingCart></ShoppingCart>
+							</ul>
+						` : `
+							<p data-cart="empty">Корзина пуста</p>
+						`}
+					</section>
 
-
-					<ShoppingCart></ShoppingCart>
+					
 
 				</div>
 
@@ -65,6 +80,13 @@ export default class PhonesPage {
 
 		this.initComponent(PhonesCatalog, {
 			phones: this.state.phones,
+			basketItems: this.state.basketItems,
+
+			onItemAdded: (phoneId) => {
+				this.state.basketItems.push(phoneId);
+				this.state.itemAdded = true;
+				this.render();
+			},
 
 			onPhoneSelected: (phoneId) => {
 				this.state.selectedPhone = getById(phoneId);
@@ -78,10 +100,34 @@ export default class PhonesPage {
 			onBack: () => {
 				this.state.selectedPhone = null;
 				this.render();
-			}
+			},
+
+			onItemRemoved: (removedElem) => {
+				this.state.basketItems.splice(removedElem, 1);
+				this.render();
+			},
+
+			onItemAdded: (phoneId) => {
+				this.state.basketItems.push(phoneId);
+				this.state.itemAdded = true;
+				this.render();
+			},
 		});
 
 		this.initComponent(ShoppingCart, {
+			phones: this.state.phones,
+			basketItems: this.state.basketItems,
+
+			onItemRemoved: (removedElem) => {
+				this.state.basketItems.splice(removedElem, 1);
+				this.render();
+			},
+
+			onItemAdded: (phoneId) => {
+				this.state.basketItems.push(phoneId);
+				this.state.itemAdded = true;
+				this.render();
+			},
 		});
 
 

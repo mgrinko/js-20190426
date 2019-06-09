@@ -35,6 +35,18 @@ export default class PhoneViewer {
 			const imgSrc = delegateTarget.getAttribute('src');
 			imgBig.setAttribute('src', imgSrc);
 		});
+
+
+		this.element.addEventListener('click', (event) => {
+			const addToCart = event.target.closest('[data-element="add-to-basket"]');
+
+			if (!addToCart) {
+				return;
+			}
+
+			this.props.onItemAdded(addToCart.dataset.phoneId);
+		});
+
 	}
 
 	render() {
@@ -45,7 +57,7 @@ export default class PhoneViewer {
 			<img class="phone" src="${ this.state.currentPicture }">
 
 			<button data-element="back-button">Back</button>
-			<button data-element="add-to-basket">Add to basket</button>
+			<button data-element="add-to-basket" data-phone-id="${ this.state.currentName }">Add to basket</button>
 
 			<h1>${ this.state.currentName }</h1>
 
@@ -53,7 +65,7 @@ export default class PhoneViewer {
 
 			<ul class="phone-thumbs">
 
-				${this.props.phone.images.map( image => `
+				${phone.images.map( image => `
 					<li>
 						<img src="${image}" alt="">
 					</li>
