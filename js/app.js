@@ -1,5 +1,5 @@
 import PhonesPage from './components/PhonesPage.js'
 
 new PhonesPage(
-	document.querySelector('.app')
+	document.querySelector('App')
 );

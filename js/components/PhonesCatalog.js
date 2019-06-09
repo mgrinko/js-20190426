@@ -14,6 +14,25 @@ export default class PhonesCatalog {
 
 			this.props.onPhoneSelected(delegateTarget.dataset.phoneId);
 		});
+
+		this.element.addEventListener('click', (event) => {
+			const delegateTarget = event.target.closest('[data-element="phone-add"]');
+
+			if (!delegateTarget) {
+				return;
+			}
+
+			const phoneName = delegateTarget.dataset.phoneId;
+
+			const cartEmpty = document.querySelector('[data-cart="empty"]');
+			cartEmpty.hidden = true;
+			const cartItem = document.querySelector('shoppingcart');
+			cartItem.insertAdjacentHTML('beforeend', `
+				<li>${phoneName}<button>x</button></li>
+			`);
+		});
+
+
 	}
 
 	render() {
@@ -32,7 +51,10 @@ export default class PhonesCatalog {
 					</a>
 
 					<div class="phones__btn-buy-wrapper">
-						<a class="btn btn-success">Add</a>
+						<a 
+							data-element="phone-add"
+							data-phone-id="${phone.id}"
+							class="btn btn-success">Add</a>
 					</div>
 					<a
 						data-element="phone-link"

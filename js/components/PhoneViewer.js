@@ -1,10 +1,13 @@
 export default class PhoneViewer {
+	state;
 	constructor(element, props) {
 		this.element = element;
 		this.props = props;
 
 		this.state = {
 			currentPicture: this.props.phone.images[0],
+			currentName: this.props.phone.name,
+			currentDescr: this.props.phone.description
 		};
 
 		this.render();
@@ -18,28 +21,44 @@ export default class PhoneViewer {
 
 			this.props.onBack();
 		});
+
+
+		this.element.addEventListener('click', (event) => {
+
+			const imgBig = document.querySelector('.phone');
+			const delegateTarget = event.target.closest('li img');
+
+			if (!delegateTarget) {
+				return;
+			}
+
+			const imgSrc = delegateTarget.getAttribute('src');
+			imgBig.setAttribute('src', imgSrc);
+		});
 	}
 
 	render() {
 		const { phone } = this.props;
 
 		this.element.innerHTML = `
+
 			<img class="phone" src="${ this.state.currentPicture }">
 
 			<button data-element="back-button">Back</button>
-			<button>Add to basket</button>
+			<button data-element="add-to-basket">Add to basket</button>
 
-			<h1>Motorola XOOM™ with Wi-Fi</h1>
+			<h1>${ this.state.currentName }</h1>
 
-			<p>Motorola XOOM with Wi-Fi has a super-powerful dual-core processor and Android™ 3.0 (Honeycomb) — the Android platform designed specifically for tablets. With its 10.1-inch HD widescreen display, you’ll enjoy HD video in a thin, light, powerful and upgradeable tablet.</p>
+			<p>${ this.state.currentDescr }</p>
 
 			<ul class="phone-thumbs">
-				<li><img src="img/phones/motorola-xoom-with-wi-fi.0.jpg"></li>
-				<li><img src="img/phones/motorola-xoom-with-wi-fi.1.jpg"></li>
-				<li><img src="img/phones/motorola-xoom-with-wi-fi.2.jpg"></li>
-				<li><img src="img/phones/motorola-xoom-with-wi-fi.3.jpg"></li>
-				<li><img src="img/phones/motorola-xoom-with-wi-fi.4.jpg"></li>
-				<li><img src="img/phones/motorola-xoom-with-wi-fi.5.jpg"></li>
+
+				${this.props.phone.images.map( image => `
+					<li>
+						<img src="${image}" alt="">
+					</li>
+				`).join('') }
+
 			</ul>
 		`;
 	}

@@ -1,5 +1,6 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
+import ShoppingCart from './ShoppingCart.js';
 import {getAll, getById} from '../api/phone.js';
 
 export default class PhonesPage {
@@ -46,14 +47,9 @@ export default class PhonesPage {
 							</p>
 					</section>
 
-					<section>
-						<p>Shopping Cart</p>
-						<ul>
-						<li>Phone 1 <button>x</button></li>
-						<li>Phone 2 <button>x</button></li>
-						<li>Phone 3 <button>x</button></li>
-						</ul>
-					</section>
+
+					<ShoppingCart></ShoppingCart>
+
 				</div>
 
 				<!--Main content-->
@@ -84,6 +80,11 @@ export default class PhonesPage {
 				this.render();
 			}
 		});
+
+		this.initComponent(ShoppingCart, {
+		});
+
+
 
 	}
 }
