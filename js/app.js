@@ -4,5 +4,3 @@ new PhonesPage(
   document.querySelector('App')
 );
 
-console.log('test');
-

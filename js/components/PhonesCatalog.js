@@ -34,7 +34,7 @@ export default class PhonesCatalog {
             </a>
   
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">
+              <a class="btn btn-success" data-element="basket-button" data-phone-name="${phone.name}">
                 Add
               </a>
             </div>
