@@ -83,11 +83,15 @@ export default class PhonesPage {
 
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
+      selectedProduct: this.state.basketItems,
 
       onBack: () => {
         this.state.selectedPhone = null;
         this.render();
-      }
+      },
+      onAdd: () => {
+        this.render();
+    }
     });
   }
 }
