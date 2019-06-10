@@ -1,5 +1,6 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
+import ShoppingCart from './ShoppingCart.js';
 import { getAll, getById } from '../api/phone.js';
 
 export default class PhonesPage {
@@ -45,14 +46,7 @@ export default class PhonesPage {
             </p>
           </section>
     
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
-          </section>
+          <ShoppingCart></ShoppingCart>
         </div>
     
         <!--Main content-->
@@ -73,6 +67,11 @@ export default class PhonesPage {
         this.state.selectedPhone = getById(phoneId);
         this.render();
       },
+
+      addBasket: (phoneId) => {
+        this.state.basketItems.push(phoneId);
+        this.render();
+      }
     });
 
     this.initComponent(PhoneViewer, {
@@ -80,6 +79,20 @@ export default class PhonesPage {
 
       onBack: () => {
         this.state.selectedPhone = null;
+        this.render();
+      },
+
+      addBasket: (phoneId) => {
+        this.state.basketItems.push(phoneId);
+        this.render();
+      }
+    });
+
+    this.initComponent(ShoppingCart, {
+      basketItems: this.state.basketItems,
+
+      deleteBasket: (phoneId) => {
+        this.state.basketItems = this.state.basketItems.filter(item => item !== phoneId);
         this.render();
       }
     });

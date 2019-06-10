@@ -8,13 +8,18 @@ export default class PhonesCatalog {
     this.render();
 
     this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.closest('[data-element="phone-link"]');
+      const delegateTargetPhoneLink = event.target.closest('[data-element="phone-link"]');
+      const delegateTargetAddBasket = event.target.closest('[data-element="add-basket"]');
 
-      if (!delegateTarget) {
-        return;
+      if (delegateTargetPhoneLink) {
+        this.props.onPhoneSelected(delegateTargetPhoneLink.dataset.phoneId);
       }
 
-      this.props.onPhoneSelected(delegateTarget.dataset.phoneId);
+      if (delegateTargetAddBasket) {
+        this.props.addBasket(delegateTargetAddBasket.dataset.phoneId);
+      }
+
+      return;
     });
   }
 
@@ -34,9 +39,11 @@ export default class PhonesCatalog {
             </a>
   
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">
-                Add
-              </a>
+              <a 
+                class="btn btn-success"
+                data-element="add-basket"
+                data-phone-id="${phone.id}"
+              >Add</a>
             </div>
   
             <a
