@@ -4,6 +4,9 @@ export default class PhonesCatalog {
   constructor(element, props) {
     this.element = element;
     this.props = props;
+    this.state = {
+      product: this.props.selectedProduct,
+  };
 
     this.render();
 
@@ -16,6 +19,17 @@ export default class PhonesCatalog {
 
       this.props.onPhoneSelected(delegateTarget.dataset.phoneId);
     });
+    this.element.addEventListener('click', (event) => {
+      const delegateTarget =
+          event.target.closest('[data-element="add-button"]');
+
+      if (!delegateTarget) {
+          return;
+      }
+      let getProductName=event.target.parentElement.parentElement.children[2].innerText
+      this.state.product.push(getProductName);
+      this.props.onAdd();
+  });
   }
 
   render() {
@@ -34,7 +48,7 @@ export default class PhonesCatalog {
             </a>
   
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">
+              <a class="btn btn-success" data-element="add-button">
                 Add
               </a>
             </div>

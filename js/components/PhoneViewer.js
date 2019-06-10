@@ -5,10 +5,32 @@ export default class PhoneViewer {
 
     this.state = {
       currentPicture: this.props.phone.images[0],
+      currentName: this.props.phone.name,
+      currentDescr: this.props.phone.description,
+      product: this.props.selectedProduct
     };
 
     this.render();
 
+    this.element.addEventListener('click', (event) => {
+      const delegateTarget = event.target.closest('[data-element="phone-link"]');
+
+      if (!delegateTarget) {
+        return;
+      }
+
+      this.props.onPhoneSelected(delegateTarget.dataset.phoneId);
+    });
+    this.element.addEventListener('click', (event) => {
+      const delegateTarget =
+        event.target.closest('[data-element="add-button"]');
+
+      if (!delegateTarget) {
+        return;
+      }
+      this.state.product.push(this.state.currentName);
+      this.props.onAdd();
+    });
     this.element.addEventListener('click', (event) => {
       const delegateTarget =
         event.target.closest('[data-element="back-button"]');
@@ -19,42 +41,43 @@ export default class PhoneViewer {
 
       this.props.onBack();
     });
+
+    this.element.addEventListener('click', (event) => {
+      const delegateTarget =
+        event.target.closest('[data-element="phone-img"]');
+
+      if (!delegateTarget) {
+        return;
+      }
+
+      this.state.currentPicture = delegateTarget.getAttribute('src');
+      this.render();
+    });
   }
 
   render() {
+
     const { phone } = this.props;
+
 
     this.element.innerHTML = `
       <div>
-        <img class="phone" src="${ this.state.currentPicture }">
+        <img class="phone" src="${ this.state.currentPicture}">
     
         <button data-element="back-button">Back</button>
-        <button>Add to basket</button>
+        <button data-element="add-button">Add to basket</button>
     
     
-        <h1>Motorola XOOM™ with Wi-Fi</h1>
+        <h1>${ this.state.currentName}</h1>
     
-        <p>Motorola XOOM with Wi-Fi has a super-powerful dual-core processor and Android™ 3.0 (Honeycomb) — the Android platform designed specifically for tablets. With its 10.1-inch HD widescreen display, you’ll enjoy HD video in a thin, light, powerful and upgradeable tablet.</p>
+        <p>${ this.state.currentDescr}</p>
     
         <ul class="phone-thumbs">
+        ${phone.images.map(image => `
           <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.0.jpg">
+            <img data-element="phone-img" src="${image}">
           </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.1.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.2.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.3.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.4.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.5.jpg">
-          </li>
+          `).join('')} 
         </ul>
       </div>
     `;
