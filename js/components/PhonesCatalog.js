@@ -5,8 +5,7 @@ export default class PhonesCatalog {
     this.element = element;
     this.props = props;
     this.state = {
-      // currentPicture: this.props.phone.images[0],
-      product: this.props.selectedProduct
+      product: this.props.selectedProduct,
   };
 
     this.render();
@@ -27,7 +26,7 @@ export default class PhonesCatalog {
       if (!delegateTarget) {
           return;
       }
-      let getProductName=event.target.parentElement.parentElement.children[0].getAttribute("data-phone-id")
+      let getProductName=event.target.parentElement.parentElement.children[2].innerText
       this.state.product.push(getProductName);
       this.props.onAdd();
   });
