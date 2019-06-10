@@ -1,87 +1,121 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
-import { getAll, getById } from '../api/phone.js';
+import {getAll, getById} from '../api/phone.js';
 
 export default class PhonesPage {
-  constructor(element) {
-    this.element = element;
+    constructor(element) {
+        this.element = element;
 
-    this.state = {
-      phones: getAll(),
-      selectedPhone: null,
-      basketItems: [],
-    };
+        this.state = {
+            phones: getAll(),
+            selectedPhone: null,
+            basketItems: [],
+        };
 
-    this.render();
-  }
+        this.render();
 
-  initComponent(constructor, props) {
-    const container = this.element.querySelector(constructor.name);
+        this.element.addEventListener('click', (event) => {
+            const delegateTarget = event.target.closest('.button-delete');
 
-    if (!container) {
-      return;
+            if (!delegateTarget) {
+                return;
+            }
+
+            let itemNumber = this.state.basketItems.indexOf(delegateTarget.dataset.phoneName);
+            if (itemNumber !== -1) {
+                this.state.basketItems.splice(itemNumber, itemNumber + 1);
+                this.render();
+            }
+        });
     }
 
-    new constructor(container, props);
-  }
+    initComponent(constructor, props) {
+        const container = this.element.querySelector(constructor.name);
 
-  render() {
-    this.element.innerHTML = `
-      <div class="row">
-        <!--Sidebar-->
-        <div class="col-md-2">
-          <section>
-            <p>
-              Search:
-              <input>
-            </p>
+        if (!container) {
+            return;
+        }
+
+        new constructor(container, props);
+    }
+
+    render() {
+        this.element.innerHTML = `
+            <div class="row">
+                <!--Sidebar-->
+                <div class="col-md-2">
+                <section>
+                    <p>
+                        Search:
+                        <input>
+                    </p>
     
-            <p>
-              Sort by:
-              <select>
-                <option value="name">Alphabetical</option>
-                <option value="age">Newest</option>
-              </select>
-            </p>
-          </section>
+                    <p>
+                        Sort by:
+                        <select>
+                            <option value="name">Alphabetical</option>
+                            <option value="age">Newest</option>
+                        </select>
+                    </p>
+                </section>
     
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
-          </section>
+                <section>
+                    <p>Shopping Cart</p>
+                    <ul>
+                        ${this.state.basketItems.map(item => `
+                            <li>
+                                ${item}
+                                <button class="button-delete"
+                                        data-phone-name="${item}"
+                                >x</button>
+                            </li>
+                        `).join("")}
+                    </ul>
+                </section>
+            </div>
+    
+            <!--Main content-->
+            <div class="col-md-10">
+                ${ this.state.selectedPhone ? `
+                <PhoneViewer></PhoneViewer>
+                ` : `
+                <PhonesCatalog></PhonesCatalog>
+                ` }
+            </div>
         </div>
-    
-        <!--Main content-->
-        <div class="col-md-10">
-          ${ this.state.selectedPhone ? `
-            <PhoneViewer></PhoneViewer>
-          ` : `
-            <PhonesCatalog></PhonesCatalog>
-          ` }
-        </div>
-      </div>
-    `;
+        `;
 
-    this.initComponent(PhonesCatalog, {
-      phones: this.state.phones,
+        this.initComponent(PhonesCatalog, {
+            phones: this.state.phones,
 
-      onPhoneSelected: (phoneId) => {
-        this.state.selectedPhone = getById(phoneId);
-        this.render();
-      },
-    });
+            onPhoneSelected: (phoneId) => {
+                this.state.selectedPhone = getById(phoneId);
+                this.render();
+            },
 
-    this.initComponent(PhoneViewer, {
-      phone: this.state.selectedPhone,
+            onAdd: (phone) => {
+                if (!this.state.basketItems.includes(phone, 0)) {
+                    this.state.basketItems.push(phone);
+                    this.render();
+                }
+            }
 
-      onBack: () => {
-        this.state.selectedPhone = null;
-        this.render();
-      }
-    });
-  }
+        });
+
+        this.initComponent(PhoneViewer, {
+            phone: this.state.selectedPhone,
+
+            onBack: () => {
+                this.state.selectedPhone = null;
+                this.render();
+            },
+
+            onAdd: (phone) => {
+                if (!this.state.basketItems.includes(phone, 0)) {
+                    this.state.basketItems.push(phone);
+                    this.render();
+                }
+            }
+        });
+    }
 }
