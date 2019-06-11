@@ -16,4 +16,13 @@ export default class Component {
       callback(event);
     });
   }
+  
+  setState(data) {
+    this.state = {
+      ...this.state,
+      ...data,
+    };
+
+    this.render();
+  }
 }
