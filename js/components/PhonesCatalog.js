@@ -11,6 +11,12 @@ export default class PhonesCatalog extends Component {
         event.delegateTarget.dataset.phoneId,
       );
     });
+
+    this.on('click', 'add-button', (event) => {
+      this.props.onAdd(
+        event.delegateTarget.dataset.phoneId,
+      );
+    });
   }
 
   render() {
@@ -29,7 +35,11 @@ export default class PhonesCatalog extends Component {
             </a>
   
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">
+              <a
+                data-element="add-button"
+                data-phone-id="${phone.id}"
+                class="btn btn-success"
+              >
                 Add
               </a>
             </div>
