@@ -1,4 +1,5 @@
 import Component from '../Component.js';
+import Basket from './Basket.js';
 
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
@@ -11,7 +12,11 @@ export default class PhonesPage extends Component {
     this.state = {
       phones: getAll(),
       selectedPhone: null,
-      basketItems: [],
+      basketItems: [
+        'qwqweqwe',
+        'sadfasdf',
+        '123123'
+      ],
     };
 
     this.render();
@@ -47,14 +52,7 @@ export default class PhonesPage extends Component {
             </p>
           </section>
     
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
-          </section>
+          <Basket></Basket>
         </div>
     
         <!--Main content-->
@@ -83,6 +81,10 @@ export default class PhonesPage extends Component {
         this.state.selectedPhone = null;
         this.render();
       }
+    });
+
+    this.initComponent(Basket, {
+      items: this.state.basketItems,
     });
   }
 }

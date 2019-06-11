@@ -5,8 +5,6 @@ export default class PhoneViewer extends Component {
     super(element, props);
 
     this.state = {
-      x: 1,
-      y: 2,
       currentPicture: this.props.phone.images[0],
     };
 
