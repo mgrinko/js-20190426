@@ -2,6 +2,8 @@ export default class Component {
   constructor(element, props = {}) {
     this.element = element;
     this.props = props;
+
+    this.childred = {};
   }
 
   on(eventName, elementName, callback) {
@@ -16,7 +18,7 @@ export default class Component {
       callback(event);
     });
   }
-  
+
   setState(data) {
     this.state = {
       ...this.state,
@@ -24,5 +26,23 @@ export default class Component {
     };
 
     this.render();
+  }
+
+  initComponent(constructor, props) {
+    const container = this.element.querySelector(constructor.name);
+
+    if (!container) {
+      delete this.childred[constructor.name];
+
+      return;
+    }
+
+    const current = this.childred[constructor.name]
+
+    if(current && _.isEqual(props, current.props)) {
+      container.replaceWith(current.element);
+    } else {
+      this.childred[constructor.name] = new constructor(container, props)
+    }
   }
 }

@@ -14,25 +14,15 @@ export default class PhoneViewer extends Component {
 
     this.on('click', 'back-button', this.props.onBack);
     this.on('click', 'thumbnail', (event) => {
-      this.state = {
-        ...this.state,
-        currentPicture: event.delegateTarget.src,
-      };
+      this.setState({
+          currentPicture: event.delegateTarget.src,
+      })
+      // this.state = {
+      //   ...this.state,
+      // };
     });
     this.on('click', 'add-button', () => {
       this.props.onAdd(this.props.phone.id)
-    });
-
-
-
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.closest('[data-element="add-button"]');
-
-      if (!delegateTarget) {
-        return;
-      }
-
-      this.props.addToBasket(delegateTarget.dataset.phoneId)
     });
   }
 
