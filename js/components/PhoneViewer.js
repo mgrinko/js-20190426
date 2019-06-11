@@ -9,29 +9,17 @@ export default class PhoneViewer {
 
     this.render();
 
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget =
-        event.target.closest('[data-element="back-button"]');
 
-      if (!delegateTarget) {
-        return;
-      }
-
-      this.props.onBack();
-    });
-
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget =
-        event.target.closest('[data-element="thumbnail"]');
-
-      if (!delegateTarget) {
-        return
-      };
-      this.state ={
+    this.on('click', 'back-button', this.props.onBack);
+    this.on('click', 'thumbnail', (event) => {
+      this.state = {
         ...this.state,
-        currentPicture: delegateTarget.src,
-      }
+        currentPicture: event.delegateTarget.src,
+      };
+
+      this.render();
     });
+
 
     this.element.addEventListener('click', (event) => {
       const delegateTarget = event.target.closest('[data-element="add-button"]');
@@ -45,9 +33,22 @@ export default class PhoneViewer {
   }
 
 
+  on(eventName, elementName, callback) {
+    this.element.addEventListener(eventName, (event) => {
+      const delegateTarget =
+        event.target.closest(`[data-element="${elementName}"]`);
+
+      if (!delegateTarget) {
+        return;
+      }
+      event.delegateTarget = delegateTarget;
+      callback(event);
+    });
+  }
+
   render() {
     const { phone } = this.props;
-    const { currentPicture } = this.props;
+    const { currentPicture } = this.state;
 
     this.element.innerHTML = `
       <div>

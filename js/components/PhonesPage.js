@@ -82,7 +82,6 @@ export default class PhonesPage {
         this.state.selectedPhone = null;
         this.render();
       },
-// как избежать дубля кода функции addToBasket?
       addToBasket: (id) => {
         let phone = getById(id);
         this.state.basketItems.push(phone);
