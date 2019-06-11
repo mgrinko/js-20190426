@@ -13,15 +13,10 @@ export default class PhonesCatalog extends Component {
       );
     });
 
-
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.closest('[data-element="add-button"]');
-
-      if (!delegateTarget) {
-        return;
-      }
-
-      this.props.addToBasket(delegateTarget.dataset.phoneId)
+    this.on('click', 'add-button', (event) => {
+      this.props.onAdd(
+        event.delegateTarget.dataset.phoneId
+      );
     });
   }
 

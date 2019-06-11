@@ -70,9 +70,16 @@ export default class PhonesPage extends Component{
         this.render();
       },
 
-      addToBasket: (id) => {
-        let phone = getById(id);
-        this.state.basketItems.push(phone);
+      onAdd: (phoneId) => {
+        this.state = {
+          ...this.state,
+
+          basketItems: [
+            ...this.state.basketItems,
+            phoneId
+          ]
+        };
+
         this.render();
       },
     });
