@@ -1,9 +1,12 @@
-export default class PhoneViewer {
+import Component from '../Component.js';
+
+export default class PhoneViewer extends Component {
   constructor(element, props) {
-    this.element = element;
-    this.props = props;
+    super(element, props);
 
     this.state = {
+      x: 1,
+      y: 2,
       currentPicture: this.props.phone.images[0],
     };
 
@@ -17,20 +20,6 @@ export default class PhoneViewer {
       };
 
       this.render();
-    });
-  }
-
-  on(eventName, elementName, callback) {
-    this.element.addEventListener(eventName, (event) => {
-      const delegateTarget =
-        event.target.closest(`[data-element="${elementName}"]`);
-
-      if (!delegateTarget) {
-        return;
-      }
-
-      event.delegateTarget = delegateTarget;
-      callback(event);
     });
   }
 

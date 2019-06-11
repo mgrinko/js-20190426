@@ -1,10 +1,12 @@
+import Component from '../Component.js';
+
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import { getAll, getById } from '../api/phone.js';
 
-export default class PhonesPage {
+export default class PhonesPage extends Component {
   constructor(element) {
-    this.element = element;
+    super(element);
 
     this.state = {
       phones: getAll(),
