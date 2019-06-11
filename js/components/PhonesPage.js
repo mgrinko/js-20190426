@@ -12,7 +12,7 @@ export default class PhonesPage extends Component{
     this.state = {
       phones: getAll(),
       selectedPhone: null,
-      basketItems: [],
+      basketItems: ['123', 'iuhiuh', '1394781987'],
     };
 
     this.render();

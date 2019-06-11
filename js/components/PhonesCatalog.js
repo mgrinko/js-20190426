@@ -1,23 +1,19 @@
 import Component from '../Component.js';
 
 
-export default class PhonesCatalog extends Copponent {
+export default class PhonesCatalog extends Component {
   constructor(element, props) {
-    super(element, props)
+    super(element, props);
 
     this.render();
 
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.closest('[data-element="phone-link"]');
-
-      if (!delegateTarget) {
-        return;
-      }
-
-      this.props.onPhoneSelected(delegateTarget.dataset.phoneId);
+    this.on('click', 'phone-link', (event) => {
+      this.props.onPhoneSelected(
+        event.delegateTarget.dataset.phoneId
+      );
     });
 
-    // на PhonesCatalog и PhoneViewer одинаковые обработчики событий, добавляющие в корзину. Как здесь избежать дубля?
+
     this.element.addEventListener('click', (event) => {
       const delegateTarget = event.target.closest('[data-element="add-button"]');
 

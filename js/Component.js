@@ -3,6 +3,7 @@ export default class Component {
     this.element = element;
     this.props = props;
   }
+
   on(eventName, elementName, callback) {
     this.element.addEventListener(eventName, (event) => {
       const delegateTarget =
