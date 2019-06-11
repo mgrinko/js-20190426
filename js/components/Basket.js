@@ -6,19 +6,10 @@ export default class Basket extends Component {
 
 
     this.render();
-
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget =
-        event.target.closest('[data-element="remove-button"]');
-
-      if (!delegateTarget) {
-        return;
-      }
-
-      let numberInBasket = delegateTarget.dataset.numberInBasket;
-      this.props.items.splice(numberInBasket, 1);
-
-      this.render();
+    this.on('click', 'delete-button', (event) => {
+      this.props.onDelete(
+        +event.delegateTarget.dataset.itemIndex
+      );
     })
   }
 
@@ -32,8 +23,8 @@ export default class Basket extends Component {
           <li>
             ${item}
             <button
-              data-element="remove-button"
-              data-number-in-basket="${i}"
+              data-element="delete-button"
+              data-item-index="${i}"
               >x</button></li>
           `).join('')}
       </ul>
