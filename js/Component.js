@@ -46,5 +46,4 @@ export default class Component {
       this.childred[constructor.name] = new constructor(container, props);
     }
   }
-
 }
