@@ -13,7 +13,7 @@ export default class PhonesPage extends Component {
       phones: getAll(),
       selectedPhone: null,
       basketItems: [
-        'qwqweqwe',
+        'qwqweqweq',
         'sadfasdf',
         '123123'
       ],
