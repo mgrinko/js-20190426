@@ -1,7 +1,8 @@
-export default class PhoneViewer {
+import Component from '../Component.js';
+
+export default class PhoneViewer extends Component {
   constructor(element, props) {
-    this.element = element;
-    this.props = props;
+    super(element, props);
 
     this.state = {
       currentPicture: this.props.phone.images[0],
@@ -9,15 +10,18 @@ export default class PhoneViewer {
 
     this.render();
 
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget =
-        event.target.closest('[data-element="back-button"]');
+    this.on('click', 'back-button', this.props.onBack);
 
-      if (!delegateTarget) {
-        return;
-      }
+    this.on('click', 'thumbnail', (event) => {
+      this.setState({
+        currentPicture: event.delegateTarget.src,
+      });
+    });
 
-      this.props.onBack();
+    this.on('click', 'add-button', () => {
+      this.props.onAdd(
+        this.props.phone.id
+      );
     });
 
     this.element.addEventListener('click', (event) => {
@@ -34,31 +38,30 @@ export default class PhoneViewer {
 
   }
 
+
   render() {
-    const { phone } = this.props;    
+    const { phone } = this.props;
+    const { currentPicture } = this.state;
 
     this.element.innerHTML = `
       <div>
-        <img class="phone" src="${ this.state.currentPicture }">
+        <img class="phone" src="${ currentPicture }">
     
         <button data-element="back-button">Back</button>
-        <button data-element="basket-button" data-phone-name="${phone.name}">Add to basket</button>
-    
+        <button data-element="add-button">Add to basket</button>
     
         <h1>${phone.name}</h1>
-    
         <p>${phone.description}</p>
     
         <ul class="phone-thumbs">
-
-          ${phone.images.map((imgSrc)=> {
-            return `
+          ${phone.images.map(imageUrl => `
             <li>
-              <img src="${imgSrc}">
+              <img
+                src="${imageUrl}"
+                data-element="thumbnail"
+              >
             </li>
-            `
-          }).join('') }
-
+          `).join('')}
         </ul>
       </div>
     `;

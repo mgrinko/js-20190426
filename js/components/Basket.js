@@ -1,23 +1,39 @@
-export default class Basket {
-    constructor(element, props) {
-        this.element = element;
-        this.props = props;
+import Component from '../Component.js';
 
-        this.render();        
-    }
+export default class Basket extends Component {
+  constructor(element, props) {
+    super(element, props);
 
-    render() {
-        this.element.innerHTML = `
-            <section>
-                <p>Shopping Cart</p>
-                <ul>
-                    ${this.props.basket.map((phoneName) => {
-                        return `
-                            <li>${phoneName} <button data-element="remove-button">x</button></li>
-                        `
-                    }).join('')}
-                </ul>
-            </section>
-        `
-    }
+    this.render();
+
+    this.on('click', 'delete-button', (event) => {
+      this.props.onDelete(
+        +event.delegateTarget.dataset.itemIndex
+      );
+    });
+  }
+
+  render() {
+    const { items } = this.props;
+
+    this.element.innerHTML = `
+      <section>
+        <p>Shopping Cart</p>
+        <ul>
+          ${items.map((item, index) => `
+            <li>
+              ${item}
+              
+              <button
+                data-element="delete-button"
+                data-item-index="${index}"
+              >
+                x
+              </button>
+            </li>
+          `).join('')}
+        </ul>
+      </section>
+    `;
+  }
 }
