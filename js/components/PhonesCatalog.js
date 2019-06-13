@@ -23,7 +23,6 @@ export default class PhonesCatalog extends Component {
     this.element.innerHTML = `
       <ul class="phones">
         ${ this.props.phones.map(phone => `
-
           <li class="thumbnail">
             <a
               data-element="phone-link"

@@ -23,19 +23,6 @@ export default class PhoneViewer extends Component {
         this.props.phone.id
       );
     });
-
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget =
-        event.target.closest('.phone-thumbs img');
-
-      if (!delegateTarget) {
-        return;
-      }
-
-      this.state.currentPicture = delegateTarget.getAttribute('src');
-      this.render();     
-    });
-
   }
 
 

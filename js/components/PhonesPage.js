@@ -5,7 +5,6 @@ import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import { getAll, getById } from '../api/phone.js';
 
-
 export default class PhonesPage extends Component {
   constructor(element) {
     super(element);
@@ -102,10 +101,6 @@ export default class PhonesPage extends Component {
     this.initComponent(Basket, {
       items: this.state.basketItems,
       onDelete: this.deleteBasketItem,
-    });
-
-    this.initComponent(Basket, {
-      basket: this.state.basketItems,
     });
   }
 }
