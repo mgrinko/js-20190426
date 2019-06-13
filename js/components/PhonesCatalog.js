@@ -35,15 +35,11 @@ export default class PhonesCatalog extends Component {
             </a>
   
             <div class="phones__btn-buy-wrapper">
-<<<<<<< HEAD
-              <a class="btn btn-success" data-element="basket-button" data-phone-name="${phone.name}">
-=======
               <a
                 data-element="add-button"
                 data-phone-id="${phone.id}"
                 class="btn btn-success"
               >
->>>>>>> upstream/gh-pages
                 Add
               </a>
             </div>
