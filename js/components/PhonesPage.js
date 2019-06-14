@@ -39,9 +39,10 @@ export default class PhonesPage extends Component {
     };
 
     this.showPhone = (phoneId) => {
-      this.setState({
-        selectedPhone: getById(phoneId),
-      });
+      getById(phoneId)
+        .then(phoneDetails => {
+          this.setState({ selectedPhone: phoneDetails });
+        });
     };
     this.hidePhone = () => {
       this.setState({
@@ -51,7 +52,9 @@ export default class PhonesPage extends Component {
 
     this.render();
 
-    getAll()
+    const phonesPromise = getAll();
+
+    phonesPromise
       .then(phones => {
         this.setState({ phones: phones });
       });
