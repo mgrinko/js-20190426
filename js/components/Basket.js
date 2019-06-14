@@ -19,35 +19,18 @@ export default class Basket {
   render() {
 
     this.element.innerHTML = `
-      <!--Sidebar-->
-        <div class="col-md-2">
-          <section>
-            <p>
-              Search:
-              <input>
-            </p>
-    
-            <p>
-              Sort by:
-              <select>
-                <option value="name">Alphabetical</option>
-                <option value="age">Newest</option>
-              </select>
-            </p>
-          </section>
-    
           <section>
             <p>Shopping Cart</p>
             <ul class="basket-list">
             ${ this.props.basketItems.map( (item, i) => `
               <li class="basket-item">
-                <button class="basket-item__delete" data-delete-item="${ i++ }">x</button>
+                <button class="basket-item__delete" data-delete-item="${ i }">x</button>
                 ${ item }
               </li>
             `).join('') } 
             </ul>
           </section>
-        </div>
+        
     `;
   }
 }

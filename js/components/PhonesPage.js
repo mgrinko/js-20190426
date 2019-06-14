@@ -29,7 +29,24 @@ export default class PhonesPage {
   render() {
     this.element.innerHTML = `
       <div class="row">
-        <Basket></Basket> 
+        <!--Sidebar-->
+        <div class="col-md-2">
+          <section>
+            <p>
+              Search:
+              <input>
+            </p>
+    
+            <p>
+              Sort by:
+              <select>
+                <option value="name">Alphabetical</option>
+                <option value="age">Newest</option>
+              </select>
+            </p>
+          </section>
+          <Basket></Basket> 
+        </div>
         <!--Main content-->
         <div class="col-md-10">
           ${ this.state.selectedPhone ? `

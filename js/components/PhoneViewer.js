@@ -9,13 +9,10 @@ export default class PhoneViewer {
       currentPicture: (imageSelected) => {
         let imageCollection = this.props.phone.images;
 
-        for(let i = 0; i < imageCollection.length; i++) {
-
-          if (imageSelected) {
-            return imageCollection[imageSelected];
-          } else {
-            return imageCollection[0];
-          }
+        if (imageSelected) {
+          return imageCollection[imageSelected];
+        } else {
+          return imageCollection[0];
         }
       }
     };
@@ -68,7 +65,7 @@ export default class PhoneViewer {
         <ul class="phone-thumbs">
           ${ this.props.phone.images.map((image, i) => `
           <li>
-            <img data-image= "${ i++ }" src="${ image }">
+            <img data-image= "${ i + 1 }" src="${ image }">
           </li>
           `).join('') } 
         </ul>
