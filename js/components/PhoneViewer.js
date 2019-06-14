@@ -4,18 +4,8 @@ export default class PhoneViewer extends Component {
   constructor(element, props) {
     super(element, props);
 
-    this.imageSelected = null;
-
     this.state = {
-      currentPicture: (imageSelected) => {
-        let imageCollection = this.props.phone.images;
-
-        if (imageSelected) {
-          return imageCollection[imageSelected];
-        } else {
-          return imageCollection[0];
-        }
-      }
+      currentPicture: this.props.phone.images[0],
     };
 
     this.render();

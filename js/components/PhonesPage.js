@@ -3,7 +3,6 @@ import Basket from './Basket.js';
 
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
-import Basket from './Basket.js';
 import { getAll, getById } from '../api/phone.js';
 
 export default class PhonesPage extends Component {
@@ -88,7 +87,6 @@ export default class PhonesPage extends Component {
 
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
-
       onPhoneSelected: this.showPhone,
       onAdd: this.addBasketItem
 
@@ -105,13 +103,5 @@ export default class PhonesPage extends Component {
       onDelete: this.deleteBasketItem,
     });
 
-    this.initComponent(Basket, {
-      basketItems: this.state.basketItems,
-
-      onDeleteItem: (item) => {
-        this.state.basketItems.splice(item, 1);
-        this.render();
-      }
-    });
   }
 }
