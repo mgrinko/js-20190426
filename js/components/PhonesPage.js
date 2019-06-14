@@ -1,6 +1,6 @@
 import Component from '../Component.js';
 import Basket from './Basket.js';
-
+import Loader from './Loader.js';
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import { getAll, getById } from '../api/phone.js';
@@ -10,14 +10,26 @@ export default class PhonesPage extends Component {
     super(element);
 
     this.state = {
-      phones: getAll(),
+      isDownloaded: false,
+      phones: [], 
       selectedPhone: null,
       basketItems: [
-        'qwqweqweq',
+        'qwqweqwe',
         'sadfasdf',
         '123123'
       ],
     };
+
+    getAll().then(
+      (phones) => {
+        this.setState({ 
+          phones,
+          isDownloaded: true,
+        });
+      },
+      // при rejected вывести ошибку
+      (error) => console.warn(error)
+    );
 
     this.addBasketItem = (phoneId) => {
       this.setState({
@@ -26,6 +38,7 @@ export default class PhonesPage extends Component {
           phoneId
         ],
       });
+      
     };
     this.deleteBasketItem = (index) => {
       const items = this.state.basketItems;
@@ -39,10 +52,16 @@ export default class PhonesPage extends Component {
     };
 
     this.showPhone = (phoneId) => {
-      this.setState({
-        selectedPhone: getById(phoneId),
-      });
+      getById(phoneId).then(
+        (selectedPhone) => {
+          this.setState({ selectedPhone });
+          
+        },
+        // при rejected вывести ошибку
+        (error) => console.warn(error)
+      );
     };
+
     this.hidePhone = () => {
       this.setState({
         selectedPhone: null,
@@ -80,22 +99,30 @@ export default class PhonesPage extends Component {
           ${ this.state.selectedPhone ? `
             <PhoneViewer></PhoneViewer>
           ` : `
-            <PhonesCatalog></PhonesCatalog>
+          ${ this.state.isDownloaded ? `
+          <PhonesCatalog></PhonesCatalog>`
+          :
+          `<Loader></Loader>`}
           ` }
         </div>
+        
       </div>
     `;
 
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
       onPhoneSelected: this.showPhone,
-      onAdd: this.addBasketItem
+      onAdd: this.addBasketItem,
+      
     });
 
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
       onBack: this.hidePhone,
       onAdd: this.addBasketItem
+    });
+
+    this.initComponent(Loader, {
     });
 
     this.initComponent(Basket, {

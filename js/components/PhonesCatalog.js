@@ -19,6 +19,7 @@ export default class PhonesCatalog extends Component {
     });
   }
 
+
   render() {
     this.element.innerHTML = `
       <ul class="phones">
