@@ -1,36 +1,40 @@
-export default class Basket {
+import Component from '../Component.js';
+
+export default class Basket extends Component {
   constructor(element, props) {
-    this.element = element;
-    this.props = props;
+    super(element, props);
 
     this.render();
 
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.dataset.deleteItem;
-
-      if (!delegateTarget) {
-        return;
-      }
-
-      this.props.onDeleteItem(+delegateTarget);
+    this.on('click', 'delete-button', (event) => {
+      this.props.onDelete(
+        +event.delegateTarget.dataset.itemIndex
+      );
     });
   }
 
   render() {
 
+    const { items } = this.props;
+
     this.element.innerHTML = `
-          <section>
-            <p>Shopping Cart</p>
-            <ul class="basket-list">
-            ${ this.props.basketItems.map( (item, i) => `
-              <li class="basket-item">
-                <button class="basket-item__delete" data-delete-item="${ i }">x</button>
-                ${ item }
-              </li>
-            `).join('') } 
-            </ul>
-          </section>
-        
+      <section>
+        <p>Shopping Cart</p>
+        <ul>
+          ${items.map((item, index) => `
+            <li>
+              ${item}
+              
+              <button
+                data-element="delete-button"
+                data-item-index="${index}"
+              >
+                x
+              </button>
+            </li>
+          `).join('')}
+        </ul>
+      </section>
     `;
   }
 }

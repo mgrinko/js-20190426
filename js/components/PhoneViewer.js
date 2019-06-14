@@ -1,7 +1,8 @@
-export default class PhoneViewer {
+import Component from '../Component.js';
+
+export default class PhoneViewer extends Component {
   constructor(element, props) {
-    this.element = element;
-    this.props = props;
+    super(element, props);
 
     this.imageSelected = null;
 
@@ -19,55 +20,46 @@ export default class PhoneViewer {
 
     this.render();
 
-    this.element.addEventListener('click', (event) => {
-      const back = '[data-element="back-button"]';
-      const addToBasket = '[data-button-add=""]';
-      const delegateTarget = event.target.closest(back) 
-        || event.target.closest(addToBasket);
-      this.imageSelected = +event.target.dataset.image;
-      
-      if (this.imageSelected || this.imageSelected === 0) {
-        return this.render();
-      }
-      
-      if (!delegateTarget) {
-        return;
-      }
+    this.on('click', 'back-button', this.props.onBack);
 
-      if (delegateTarget === event.target.closest(back)) {
-        this.props.onBack();
-      } else {
-        this.props.onAddItem(delegateTarget.dataset.phoneName);
-      }
-     
-      
+    this.on('click', 'thumbnail', (event) => {
+      this.setState({
+        currentPicture: event.delegateTarget.src,
+      });
+    });
+
+    this.on('click', 'add-button', () => {
+      this.props.onAdd(
+        this.props.phone.id
+      );
     });
   }
 
+
   render() {
     const { phone } = this.props;
+    const { currentPicture } = this.state;
 
     this.element.innerHTML = `
       <div>
-        <img class="phone" src="${ this.state.currentPicture(this.imageSelected) }">
+
+        <img class="phone" src="${ currentPicture }">
     
         <button data-element="back-button">Back</button>
-        <button 
-          data-button-add=""
-          data-phone-name="${phone.name}"
-          >Add to basket</button>
+        <button data-element="add-button">Add to basket</button>
     
-    
-        <h1>${ phone.name }</h1>
-    
-        <p>${ phone.description }</p>
+        <h1>${phone.name}</h1>
+        <p>${phone.description}</p>
     
         <ul class="phone-thumbs">
-          ${ this.props.phone.images.map((image, i) => `
-          <li>
-            <img data-image= "${ i + 1 }" src="${ image }">
-          </li>
-          `).join('') } 
+          ${phone.images.map(imageUrl => `
+            <li>
+              <img
+                src="${imageUrl}"
+                data-element="thumbnail"
+              >
+            </li>
+          `).join('')}
         </ul>
       </div>
     `;
