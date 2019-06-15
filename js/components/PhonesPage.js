@@ -10,7 +10,7 @@ export default class PhonesPage extends Component{
     super(element)
 
     this.state = {
-      phones: getAll(),
+      phones: [],
       selectedPhone: null,
       basketItems: ['123', 'iuhiuh', '1394781987'],
     };
@@ -35,6 +35,10 @@ export default class PhonesPage extends Component{
       })
     }
     this.showPhone = (phoneId) => {
+      getById(phoneId)
+        .then(phoneDetails => {
+          this.setState({ selectedPhone: phoneDetails })
+        })
       this.setState({
         selectedPhone: getById(phoneId),
       })
@@ -46,6 +50,10 @@ export default class PhonesPage extends Component{
     };
 
     this.render();
+
+    getAll().then(phones => {
+      this.setState({ phones: phones })
+    })
   }
 
 
