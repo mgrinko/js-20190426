@@ -52,7 +52,7 @@ export default class PhonesPage extends Component{
     this.render();
 
     getAll().then(phones => {
-      this.setState({ phones: phones })
+      this.setState({ phones })
     })
   }
 
