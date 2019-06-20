@@ -10,13 +10,9 @@ export default class PhonesPage extends Component {
     super(element);
 
     this.state = {
-      phones: getAll(),
+      phones: [],
       selectedPhone: null,
-      basketItems: [
-        'qwqweqwe',
-        'sadfasdf',
-        '123123'
-      ],
+      basketItems: [],
     };
 
     this.addBasketItem = (phoneId) => {
@@ -39,15 +35,24 @@ export default class PhonesPage extends Component {
     };
 
     this.showPhone = (phoneId) => {
-      this.setState({
-        selectedPhone: getById(phoneId),
-      });
+      getById(phoneId)
+        .then(phone => {
+          this.setState({
+            selectedPhone: phone
+          })
+        })
     };
+
     this.hidePhone = () => {
       this.setState({
         selectedPhone: null,
       });
     };
+
+    const phonesPromise = getAll();
+    phonesPromise.then(phones => {
+        this.setState({ phones: phones })
+      });
 
     this.render();
   }
