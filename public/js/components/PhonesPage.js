@@ -17,6 +17,8 @@ export default class PhonesPage extends Component {
       phones: [],
       selectedPhone: null,
       basketItems: initialItem,
+      query: 'Moto',
+      sortField: '',
     };
 
     this.addBasketItem = (phoneId) => {
@@ -54,9 +56,20 @@ export default class PhonesPage extends Component {
       });
     };
 
+    this.setQuery = (query) => {
+      this.setState({ query });
+    };
+
+    this.setSortField = (sortField) => {
+      this.setState({ sortField });
+    };
+
     this.render();
 
-    getAll()
+    getAll({
+      query: this.state.query,
+      sortField: this.state.sortField,
+    })
       .then(phones => {
         this.setState({ phones });
       });
@@ -67,21 +80,7 @@ export default class PhonesPage extends Component {
       <div class="row">
         <!--Sidebar-->
         <div class="col-md-2">
-          <section>
-            <p>
-              Search:
-              <input>
-            </p>
-    
-            <p>
-              Sort by:
-              <select>
-                <option value="name">Alphabetical</option>
-                <option value="age">Newest</option>
-              </select>
-            </p>
-          </section>
-    
+          <Filter></Filter>
           <Basket></Basket>
         </div>
     

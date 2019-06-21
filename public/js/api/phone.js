@@ -7,7 +7,14 @@ export const getById = async (phoneId) => {
   return response.json();
 };
 
-export const getAll = () => {
-  return fetch(`${API_URL}/phones.json`)
-    .then(res => res.json());
+export const getAll = (params) => {
+  return fetch(`${API_URL}/phones.json?query=${params.query}&sortField=${params.sortField}`)
+    .then(res => res.json())
+    .then(phones => {
+      const normalizedQuery = params.query.toLowerCase();
+
+      return phones.filter(
+        phone => phone.name.toLowerCase().includes(normalizedQuery)
+      );
+    })
 };
