@@ -7,9 +7,9 @@ export default class Basket extends Component {
     this.render();
 
     this.on('click', 'delete-button', (event) => {
-      this.props.onDelete(
-        +event.delegateTarget.dataset.itemIndex
-      );
+      const index = +event.delegateTarget.dataset.itemIndex;
+
+      this.props.onDelete(index);
     });
   }
 
@@ -17,8 +17,9 @@ export default class Basket extends Component {
     const { items } = this.props;
 
     this.element.innerHTML = `
-      <section>
-        <p>Shopping Cart</p>
+      <section class="basket">
+        <h4>Shopping Cart</h4>
+        
         <ul>
           ${items.map((item, index) => `
             <li>

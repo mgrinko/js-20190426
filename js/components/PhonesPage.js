@@ -12,11 +12,7 @@ export default class PhonesPage extends Component {
     this.state = {
       phones: [],
       selectedPhone: null,
-      basketItems: [
-        'qwqweqwe',
-        'sadfasdf',
-        '123123'
-      ],
+      basketItems: [],
     };
 
     this.addBasketItem = (phoneId) => {
@@ -52,11 +48,9 @@ export default class PhonesPage extends Component {
 
     this.render();
 
-    const phonesPromise = getAll();
-
-    phonesPromise
+    getAll()
       .then(phones => {
-        this.setState({ phones: phones });
+        this.setState({ phones });
       });
   }
 
