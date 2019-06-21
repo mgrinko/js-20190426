@@ -19,7 +19,7 @@ export default class PhonesPage extends Component {
       selectedPhone: null,
       basketItems: initialItem,
       query: 'Moto',
-      sortField: '',
+      sortField: 'name',
     };
 
     this.addBasketItem = (phoneId) => {
@@ -105,13 +105,11 @@ export default class PhonesPage extends Component {
       onPhoneSelected: this.showPhone,
       onAdd: this.addBasketItem
     });
-
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
       onBack: this.hidePhone,
       onAdd: this.addBasketItem
     });
-
     this.initComponent(Basket, {
       items: this.state.basketItems,
       onDelete: this.deleteBasketItem,
