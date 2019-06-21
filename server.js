@@ -6,11 +6,13 @@ const file = new nodeStatic.Server('.', {
     'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
     'Access-Control-Allow-Methods': 'POST, GET',
     'Access-Control-Allow-Headers': 'Content-Type',
+    'Set-Cookie': 'test=123'
   }
 });
 
 http
   .createServer(function(req, res) {
+    console.log(req.headers.cookie);
     file.serve(req, res);
   })
   .listen(3000);
