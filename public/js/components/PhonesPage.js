@@ -64,6 +64,7 @@ export default class PhonesPage extends Component {
 
     this.setSortField = (sortField) => {
       this.setState({ sortField });
+      this.loadPhones();
     };
 
     this.render();
