@@ -1,0 +1,23 @@
+{
+  "name": "js-20190426",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgrinko/js-20190426.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mgrinko/js-20190426/issues"
+  },
+  "homepage": "https://mgrinko.github.io/js-20190426",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
