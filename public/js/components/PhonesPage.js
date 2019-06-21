@@ -1,5 +1,6 @@
 import Component from '../Component.js';
 import Basket from './Basket.js';
+import Filter from './Filter.js';
 
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
@@ -58,6 +59,7 @@ export default class PhonesPage extends Component {
 
     this.setQuery = (query) => {
       this.setState({ query });
+      this.loadPhones();
     };
 
     this.setSortField = (sortField) => {
@@ -65,7 +67,10 @@ export default class PhonesPage extends Component {
     };
 
     this.render();
+    this.loadPhones();
+  }
 
+  loadPhones() {
     getAll({
       query: this.state.query,
       sortField: this.state.sortField,
@@ -110,6 +115,14 @@ export default class PhonesPage extends Component {
     this.initComponent(Basket, {
       items: this.state.basketItems,
       onDelete: this.deleteBasketItem,
+    });
+
+    this.initComponent(Filter, {
+      query: this.state.query,
+      sortField: this.state.sortField,
+
+      onQueryChange: this.setQuery,
+      onSortChange: this.setSortField,
     });
   }
 }

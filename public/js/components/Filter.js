@@ -5,6 +5,10 @@ export default class Filter extends Component {
     super(element, props);
 
     this.render();
+
+    this.on('change', 'query-field', (event) => {
+      props.onQueryChange(event.target.value)
+    });
   }
 
   render() {
@@ -12,7 +16,10 @@ export default class Filter extends Component {
       <section>
         <p>
           Search:
-          <input>
+          <input
+            data-element="query-field"
+            value="${this.props.query}"
+          >
         </p>
 
         <p>
