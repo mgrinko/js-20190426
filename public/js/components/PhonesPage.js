@@ -9,10 +9,14 @@ export default class PhonesPage extends Component {
   constructor(element) {
     super(element);
 
+    const initialItem = localStorage.getItem('basketItems')
+      ? localStorage.getItem('basketItems').split(',')
+      : [];
+
     this.state = {
       phones: [],
       selectedPhone: null,
-      basketItems: [],
+      basketItems: initialItem,
     };
 
     this.addBasketItem = (phoneId) => {
@@ -22,6 +26,8 @@ export default class PhonesPage extends Component {
           phoneId
         ],
       });
+
+      localStorage.setItem('basketItems', this.state.basketItems.join(','))
     };
     this.deleteBasketItem = (index) => {
       const items = this.state.basketItems;
@@ -32,6 +38,8 @@ export default class PhonesPage extends Component {
           ...items.slice(index + 1)
         ],
       });
+
+      localStorage.setItem('basketItems', this.state.basketItems.join(','))
     };
 
     this.showPhone = (phoneId) => {
