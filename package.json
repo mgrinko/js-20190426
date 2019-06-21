@@ -5,7 +5,7 @@
   "main": "1.js",
   "scripts": {
     "client": "http-server ./public/ -c-1",
-    "start": "node server.js"
+    "server": "node server.js"
   },
   "repository": {
     "type": "git",
