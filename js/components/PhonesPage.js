@@ -8,7 +8,7 @@ import Basket from './Basket.js'
 export default class PhonesPage extends Component{
   constructor(element) {
     super(element)
-
+    
     this.state = {
       phones: [],
       selectedPhone: null,
