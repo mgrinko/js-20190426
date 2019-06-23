@@ -8,11 +8,15 @@ import Basket from './Basket.js'
 export default class PhonesPage extends Component{
   constructor(element) {
     super(element)
-    
+
+    const initialItem = localStorage.getItem('basketItems')
+      ? localStorage.getItem('basketItems').split(',')
+      : [];
+
     this.state = {
       phones: [],
       selectedPhone: null,
-      basketItems: ['123', 'iuhiuh', '1394781987'],
+      basketItems: initialItem,
     };
 
 
@@ -23,7 +27,10 @@ export default class PhonesPage extends Component{
           phoneId
         ],
       });
+
+      localStorage.setItem('basketItems', this.state.basketItems.join(','))
     };
+
     this.deleteBasketItem = (index) => {
       const items = this.state.basketItems;
 
@@ -32,7 +39,9 @@ export default class PhonesPage extends Component{
           ...items.slice(0, index),
           ...items.slice(index + 1)
         ]
-      })
+      });
+
+      localStorage.setItem('basketItems', this.state.basketItems.join(','))
     }
     this.showPhone = (phoneId) => {
       getById(phoneId)
