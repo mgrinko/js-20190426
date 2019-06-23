@@ -26,8 +26,18 @@ export default class Filter extends Component {
         <p>
           Sort by:
           <select>
-            <option value="name">Alphabetical</option>
-            <option value="age">Newest</option>
+            <option
+              value="name"
+              ${this.props.sortField === 'name' ? 'selected' : ''}
+            >
+            Alphabetical
+            </option>
+            <option
+              value="age"
+              ${this.props.sortField === 'age' ? 'selected' : ''}
+            >
+            Newest
+            </option>
           </select>
         </p>
       </section>
