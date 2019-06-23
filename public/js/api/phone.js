@@ -6,7 +6,11 @@ export const getById = async (phoneId) => {
   return response.json()
 };
 
-export const getAll = async () => {
-  let response = await fetch(`${API_URL}/phones.json`);
-  return response.json()
+export const getAll = async (params) => {
+  let response = await fetch(`${API_URL}/phones.json?query=${params.query}&sortField=${params.sortField}`);
+  let phones = await response.json();
+  let normalizeQuery = params.query.toLowerCase();
+  return phones.filter(
+    phone => phone.name.toLowerCase().includes(normalizeQuery)
+  )
 };
