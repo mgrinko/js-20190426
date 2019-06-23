@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "http-server ./public/ -c-1"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/e-melnichenko/js-20190426#readme",
   "dependencies": {
-    "http-server": "^0.11.1"
+    "ecstatic": "^3.0.0",
+    "http-server": "^0.11.1",
+    "node-static": "^0.7.11"
   }
 }
