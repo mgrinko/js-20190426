@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "http-server ./public/ -c-1"
+    "client": "http-server ./public/ -c-1",
+    "server": "node server.js"
   },
   "repository": {
     "type": "git",

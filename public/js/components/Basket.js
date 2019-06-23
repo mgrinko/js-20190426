@@ -16,18 +16,26 @@ export default class Basket extends Component {
   render() {
     const {items} = this.props;
     this.element.innerHTML = `
-    <section>
-      <p>Shopping Cart</p>
-      <ul>
+    <section class="basket">
+      <h4>Shopping Cart</h4>
+
+      ${items.length > 0 ? `
+        <ul>
         ${items.map((item, i) => `
           <li>
-            ${item}
+          ${item}
             <button
               data-element="delete-button"
               data-item-index="${i}"
-              >x</button></li>
-          `).join('')}
-      </ul>
+            >
+            x
+            </button>
+          </li>
+        `).join('')}
+        </ul>
+        ` : `
+          <p>No items yet</p>
+        `}
     </section>
     `
   }
