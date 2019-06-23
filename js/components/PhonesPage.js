@@ -1,28 +1,60 @@
+import Component from '../Component.js';
+import Basket from './Basket.js';
+
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import { getAll, getById } from '../api/phone.js';
 
-export default class PhonesPage {
+export default class PhonesPage extends Component {
   constructor(element) {
-    this.element = element;
+    super(element);
 
     this.state = {
-      phones: getAll(),
+      phones: [],
       selectedPhone: null,
       basketItems: [],
     };
 
+    this.addBasketItem = (phoneId) => {
+      this.setState({
+        basketItems: [
+          ...this.state.basketItems,
+          phoneId
+        ],
+      });
+    };
+    this.deleteBasketItem = (index) => {
+      const items = this.state.basketItems;
+
+      this.setState({
+        basketItems: [
+          ...items.slice(0, index),
+          ...items.slice(index + 1)
+        ],
+      });
+    };
+
+    this.showPhone = (phoneId) => {
+      getById(phoneId)
+        .then(phone => {
+          this.setState({
+            selectedPhone: phone
+          })
+        })
+    };
+
+    this.hidePhone = () => {
+      this.setState({
+        selectedPhone: null,
+      });
+    };
+
+    const phonesPromise = getAll();
+    phonesPromise.then(phones => {
+        this.setState({ phones: phones })
+      });
+
     this.render();
-  }
-
-  initComponent(constructor, props) {
-    const container = this.element.querySelector(constructor.name);
-
-    if (!container) {
-      return;
-    }
-
-    new constructor(container, props);
   }
 
   render() {
@@ -45,14 +77,7 @@ export default class PhonesPage {
             </p>
           </section>
     
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1 <button>x</button></li>
-              <li>Phone 2 <button>x</button></li>
-              <li>Phone 3 <button>x</button></li>
-            </ul>
-          </section>
+          <Basket></Basket>
         </div>
     
         <!--Main content-->
@@ -68,20 +93,19 @@ export default class PhonesPage {
 
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
-
-      onPhoneSelected: (phoneId) => {
-        this.state.selectedPhone = getById(phoneId);
-        this.render();
-      },
+      onPhoneSelected: this.showPhone,
+      onAdd: this.addBasketItem
     });
 
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
+      onBack: this.hidePhone,
+      onAdd: this.addBasketItem
+    });
 
-      onBack: () => {
-        this.state.selectedPhone = null;
-        this.render();
-      }
+    this.initComponent(Basket, {
+      items: this.state.basketItems,
+      onDelete: this.deleteBasketItem,
     });
   }
 }
