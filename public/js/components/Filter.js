@@ -1,11 +1,15 @@
 import Component from '../Component.js';
 
-export default class Basket extends Component {
+export default class Filter extends Component {
   constructor(element, props) {
     super(element, props);
 
 
     this.render();
+
+    this.on('change', 'query-field', (event) => {
+      this.props.onQueryChange(event.target.value);
+    })
   }
 
   render() {
@@ -13,7 +17,10 @@ export default class Basket extends Component {
       <section>
         <p>
           Search:
-          <input>
+          <input
+          value="${this.props.query}"
+          data-element="query-field"
+          >
         </p>
 
         <p>

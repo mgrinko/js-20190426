@@ -3,7 +3,8 @@ import Component from '../Component.js';
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import { getAll, getById } from '../api/phone.js';
-import Basket from './Basket.js'
+import Basket from './Basket.js';
+import Filter from './Filter.js'
 
 export default class PhonesPage extends Component{
   constructor(element) {
@@ -60,6 +61,7 @@ export default class PhonesPage extends Component{
     };
     this.setQuery = (query) => {
       this.setState({ query });
+      this.loadPhones();
     };
     this.setSortField = (sortField) => {
       this.setState({ sortField });
@@ -67,16 +69,18 @@ export default class PhonesPage extends Component{
 
     this.render();
 
+    this.loadPhones();
+  }
+
+  loadPhones() {
     getAll({
       query: this.state.query,
       sortField: this.state.sortField,
     })
-      .then(phones => {
+    .then(phones => {
       this.setState({ phones })
     })
   }
-
-
 
   render() {
     this.element.innerHTML = `
@@ -100,12 +104,14 @@ export default class PhonesPage extends Component{
 
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
+
       onPhoneSelected: this.showPhone,
       onAdd: this.addBasketItem,
     });
 
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
+
       onBack: this.hidePhone,
       onAdd: this.addBasketItem,
 
@@ -113,7 +119,16 @@ export default class PhonesPage extends Component{
 
     this.initComponent(Basket, {
       items: this.state.basketItems,
+
       onDelete: this.deleteBasketItem,
+    });
+
+    this.initComponent(Filter, {
+      query: this.state.query,
+      sortField: this.state.sortField,
+
+      onQueryChange: this.setQuery,
+      onSortChange: this.setSortField,
     });
   }
 }
