@@ -5,7 +5,7 @@ console.log('NODE_ENV--------------------', process.env.NODE_ENV);
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  mode: 'none',
+  mode: isProduction ? 'production' : 'development',
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'public'),
