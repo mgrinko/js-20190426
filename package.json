@@ -4,10 +4,10 @@
   "description": "",
   "main": "1.js",
   "scripts": {
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d public",
-    "start": "webpack-dev-server --open --hot",
+    "start": "NODE_ENV=developmnet webpack-dev-server --open --hot",
     "server": "node server.js"
   },
   "repository": {
