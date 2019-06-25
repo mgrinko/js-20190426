@@ -9,6 +9,10 @@ module.exports = {
   },
   devtool: 'source-map',
 
+  devServer: {
+    contentBase: './public'
+  },
+
   module: {
     rules: [
       {
