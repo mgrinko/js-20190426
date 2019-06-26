@@ -726,7 +726,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // const API_URL = 'https://mgrinko.github.io/js-20190426/api'
-var API_URL = './api';
+var API_URL = 'http://127.0.0.1:3000/api';
 var getById =
 /*#__PURE__*/
 function () {
