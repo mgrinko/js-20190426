@@ -6,11 +6,11 @@ console.log('NODE_ENV--------------------', process.env.NODE_ENV);
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  mode: isProduction ? 'production' : 'development',
+  mode: 'none',
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: '[name].[contenthash].js',
+    filename: '[name][hash].js',
   },
 
   devtool: isProduction ? false : 'source-map',
@@ -19,10 +19,10 @@ module.exports = {
     contentBase: './public'
   },
 
-  optimization: {
-    minimize: isProduction,
-    minimizer: [new TerserPlugin()],
-  },
+  // optimization: {
+  //   minimize: true,
+  //   minimizer: [new TerserPlugin()],
+  // },
 
   plugins: [new HtmlWebpackPlugin({
     template: './src/index.html',
