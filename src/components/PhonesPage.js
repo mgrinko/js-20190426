@@ -101,22 +101,22 @@ export default class PhonesPage extends Component {
       </div>
     `;
 
-    this.initComponent(PhonesCatalog, {
+    this.initComponent(PhonesCatalog, 'PhonesCatalog', {
       phones: this.state.phones,
       onPhoneSelected: this.showPhone,
       onAdd: this.addBasketItem
     });
-    this.initComponent(PhoneViewer, {
+    this.initComponent(PhoneViewer, 'PhoneViewer', {
       phone: this.state.selectedPhone,
       onBack: this.hidePhone,
       onAdd: this.addBasketItem
     });
-    this.initComponent(Basket, {
+    this.initComponent(Basket, 'Basket', {
       items: this.state.basketItems,
       onDelete: this.deleteBasketItem,
     });
 
-    this.initComponent(Filter, {
+    this.initComponent(Filter, 'Filter',{
       query: this.state.query,
       sortField: this.state.sortField,
 

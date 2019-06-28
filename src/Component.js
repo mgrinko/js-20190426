@@ -29,21 +29,21 @@ export default class Component {
     });
   }
 
-  initComponent(constructor, props) {
-    const container = this.element.querySelector(constructor.name);
+  initComponent(constructor, componentName, props) {
+    const container = this.element.querySelector(componentName);
 
     if (!container) {
-      delete this.childred[constructor.name];
+      delete this.childred[componentName];
 
       return;
     }
 
-    const current = this.childred[constructor.name];
+    const current = this.childred[componentName];
 
     if (current && _.isEqual(props, current.props)) {
       container.replaceWith(current.element);
     } else {
-      this.childred[constructor.name] = new constructor(container, props);
+      this.childred[componentName] = new constructor(container, props);
     }
   }
 }

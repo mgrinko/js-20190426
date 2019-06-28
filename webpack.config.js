@@ -10,7 +10,7 @@ module.exports = {
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: '[name][hash].js',
+    filename: '[name].[hash].js',
   },
 
   devtool: isProduction ? false : 'source-map',
@@ -19,10 +19,10 @@ module.exports = {
     contentBase: './public'
   },
 
-  // optimization: {
-  //   minimize: true,
-  //   minimizer: [new TerserPlugin()],
-  // },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
 
   plugins: [new HtmlWebpackPlugin({
     template: './src/index.html',
