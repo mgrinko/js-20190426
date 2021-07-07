@@ -14,6 +14,10 @@ body {
   float: left;
 }
 
+.basket {
+  margin-top: 30px;
+}
+
 .phones {
   list-style: none;
 }
@@ -104,4 +108,19 @@ ul.specs dt {
 
 h1 {
   border-bottom: 1px solid gray;
+}
+
+.basket-list {
+  list-style: none;
+}
+
+.basket-item {
+  position: relative;
+  line-height: 1.8em;
+}
+.basket-item__delete {
+  position: absolute;
+  left: -40px;
+  top: 0;
+  line-height: 1.2em;
 }

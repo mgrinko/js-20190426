@@ -1,20 +1,21 @@
-'use strict';
+import Component from '../Component.js';
 
-export default class PhonesCatalog {
+export default class PhonesCatalog extends Component {
   constructor(element, props) {
-    this.element = element;
-    this.props = props;
+    super(element, props);
 
     this.render();
 
-    this.element.addEventListener('click', (event) => {
-      const delegateTarget = event.target.closest('[data-element="phone-link"]');
+    this.on('click', 'phone-link', (event) => {
+      this.props.onPhoneSelected(
+        event.delegateTarget.dataset.phoneId,
+      );
+    });
 
-      if (!delegateTarget) {
-        return;
-      }
-
-      this.props.onPhoneSelected(delegateTarget.dataset.phoneId);
+    this.on('click', 'add-button', (event) => {
+      this.props.onAdd(
+        event.delegateTarget.dataset.phoneId,
+      );
     });
   }
 
@@ -34,7 +35,12 @@ export default class PhonesCatalog {
             </a>
   
             <div class="phones__btn-buy-wrapper">
-              <a class="btn btn-success">
+
+              <a
+                data-element="add-button"
+                data-phone-id="${phone.id}"
+                class="btn btn-success"
+              >
                 Add
               </a>
             </div>
